@@ -1,0 +1,148 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13 Apr, 2017, 9:35:09 AM
+    Author     : shailesh
+*/
+.bootstrap-tagsinput input {
+    display: inline-block !important;
+    border: none !important;
+    outline: none !important;
+}
+#employee_data td {
+    border-right: none;
+    border-left: none;
+}
+#employee_form section .bootstrap-filestyle .group-span-filestyle label,#document_form section .bootstrap-filestyle .group-span-filestyle label {
+    margin-top: 0;
+}
+.doc-submit-btn{
+    position: absolute;
+    right: 25px;
+    bottom: -20px;
+}
+.checkbox-custom label::before,.checkbox-custom label::after{
+    margin-top: 6px;
+}
+.checkbox-custom.checkbox-success input[type="checkbox"]:checked + label::before {
+    background-color: #5fbeaa;
+    border-color: #5fbeaa;
+}
+#leave_data .mails td:last-of-type {
+    width: 140px;
+    padding-right: 20px;
+}
+#employee-salary-details .panel.panel-default {
+    background-color: transparent;
+    border: none !important;
+    box-shadow: none;
+}
+#employee-salary-details .panel.panel-default .panel-body {
+    background-color: white;
+}
+.sub-header-right-btn{
+    text-align: right;
+    margin-top: 20px;
+}
+#document_form .radio label::before,#document_form .radio label::after{
+    margin-top: 5px;
+}
+.fileslist .member-info {
+    padding-left: 60px;
+}
+.no-border-radius{
+    border-radius: 0;
+}
+.salary-paid .panel-heading {
+    background-color: #5fbeaa;
+    color: white;
+}
+.salary-paid tfoot {
+    display: none;
+}
+.increment .col-xs-12 .card-box {
+    min-height: 327px;
+}
+.std_select_action option{
+    color: #5fbeaa;
+    font-size: 30px;
+}
+.student_data_tbl tbody tr td:nth-child(1)
+{
+   /* text-align: center !important; */
+}
+.general_tab_copy_textarea{
+    padding: 4px!important;
+    cursor: pointer;
+    resize: none;
+    background-color: transparent!important;
+    border: 1px solid #e3e3e3;
+    margin: 1px;
+} 
+.margin_bottom_cls{
+    margin-bottom: 10px;
+}
+.margin_right_cls{
+    margin-bottom: 10px;
+} 
+.margin_left_cls{
+    margin-bottom: 10px;
+} 
+.margin_top_cls{
+    margin-bottom: 10px;
+} 
+.language_scroll {
+    height: 292px;
+    overflow-Y: scroll;
+    overflow-X: hidden;
+}
+.language_scroll_send_page {
+    height: 500px;
+    overflow-Y: scroll;
+    overflow-X: hidden;
+}
+font.bold_add_result {
+    font-weight: bold;
+    /* padding: 10px; */
+}
+@font-face {
+    font-family:'gujarati';
+    src: url('../font/noto-sans-gujarati/Noto_Sans_Gujarati.ttf') format('truetype');
+}
+
+/********************************************** GST ************************************************** */
+.text-align-left
+{
+    text-align: left !important;
+}
+.text-align-center
+{
+    text-align: center !important;
+}
+.view_wholesale_bill table tr > td:nth-child(2) {
+    width: 24%;
+}
+.view_wholesale_bill .child-table tr td, .view_wholesale_bill .child-table tr th
+{
+    padding:12px;
+} 
+.view_wholesale_bill table tr td, .view_wholesale_bill table tr th
+{
+    padding : 2px !important;
+}
+.text-capitalize
+{
+    text-transform: capitalize !important;
+}
+.cursor_pointer
+{
+    cursor:pointer !important;
+}
+.decoration-color
+{
+    color: blue !important;
+    text-decoration: underline !important;
+}

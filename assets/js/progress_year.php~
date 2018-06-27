@@ -1,0 +1,176 @@
+<div class="row">
+    <div class="col-sm-10">
+        <h4 class="page-title">Student</h4>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?php echo base_url(); ?>">Home</a>
+            </li>
+            <li>
+                <a href="<?php echo base_url() . 'student/'; ?>">Student</a>
+            </li>
+            <li class="active">
+                Progress Report
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <?php
+    // print_r($std_exam_data);
+//    
+//    
+//    
+//    $first_day_this_month = date('m-01-Y'); // hard-coded '01' for first dayecho 
+// $last_day_this_month  = date('m-t-Y');
+//
+//// With timestamp, this gets last day of April 2010
+//echo $last_day_april_2010 = date('m-t-Y', strtotime('April 21, 2010'));
+
+    $table = "Result";
+    $table_exam = "Exam";
+    $orderby = "result_id";
+    $html = $marks = '';
+    $i = 0;
+    $f = 0;
+    $month_number = 0;
+    $color = array();
+    $subject = array_column($subject, 'sub_code');
+
+    $year_stemp = date("Y") . " - " . date('y', strtotime('+1 year'));
+    foreach ($subject as $val) {
+		 $col_rand=rand(1,900000);
+        $color[$val]="#".$col_rand; 
+        //echo $subject[$i]['sub_code'];
+        $where = array(
+            "exam_standard" => $student["std_standard"],
+            "exam_faculty" => $student["std_faculty"],
+            "exam_subject" => $val
+        );
+        //echo $subject[$i].": $i \n";
+        $exam_marks_data = $this->common_px_mdl->get($table_exam, $where);
+        // get data subject group wise 2 bio
+
+
+        foreach ($exam_marks_data as $get_val) {
+            $where = array(
+                "std_id" => $student["std_id"],
+                "exam_id" => $get_val['exam_id']
+            );
+
+            $std_result_data = $this->common_px_mdl->get($table, $where);
+
+
+
+            $years = date("Y-m-d", strtotime($get_val['exam_date']));
+            $date1 = $years;
+            $date2 = date("Y-m-d");
+            $diff = abs(strtotime($date2) - strtotime($date1));
+            $years = floor($diff / (365 * 60 * 60 * 24));
+
+            $marks = null;
+            if ($std_result_data && $years == 0) {
+
+                $html .='{';
+                $html .= 'backgroundColor:"' . $color[$val] . '",';
+                $html .='borderColor:"' . $color[$val] . '",';
+                $html .='fill: false,';
+                $html .=' data: [';
+                $label = $val;
+                $obt_marks = ( $std_result_data ) ? $std_result_data[0]['result_added_marks'] : 0;
+
+                for ($j = 6; $j <= 18; $j++) {
+
+                    $month = date("m", strtotime($get_val['exam_date']));
+                    if ($j >= 13)
+                        $month_number = abs(12 - $j);
+                    else
+                        $month_number = $j;
+
+                    if ($month == $month_number) {
+                        $marks.="{$obt_marks},";
+                    } else {
+                        $marks.="00,";
+                    }
+                }
+                $marks = rtrim($marks, ",");
+                $html .= $marks . '],';
+                $html .= " label: '$label',},";
+            }
+            $f++;
+        }
+        $i++;
+    }
+    //echo $i;echo $html;
+    $whole_month = array( 6 => "Jun", 7 => "Jul", 8 => "Aug", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dec",1 =>"Jan",2 => "Feb", 3 => "Mar", 4 => "Apr", 5 => "May");
+    ?>
+    <div class="col-md-12">
+        <form action="<?php echo base_url() . 'student/progress_report/' . $student["std_id"] ?>"  id="chart-filter-form" method="post">
+            <div class="form-group">
+
+                <div class="col-sm-1">
+                    <select name="from_month" id="from_month"  class="form-control" required >
+                         <?php
+                        $year_both=date("y");
+                        $next_year=array(1,2,3,4,5);
+                        $ff=0;
+                        foreach ($whole_month as $key => $val) {
+                            if(in_array($key,$next_year))
+                            {
+                                $ff=$year_both+1;
+                                echo "<option value='$key'>$val - $ff </option>";
+                            }  else {
+                                echo "<option value='$key'>$val - $year_both </option>";
+                            }
+                            
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-sm-1">
+                    <button type="submit" name="filter_year_month" class="btn btn-primary"> View </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="reset" class="btn btn-default m-l-5" > Clear </button>
+                </div>
+                <font class="col-md-12" id="valid_alert_msg" color="red"></font>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-12">
+        <canvas id="line-charts" width="500" height="200"></canvas>
+    </div>
+    <script>
+
+
+
+
+        new Chart(document.getElementById("line-charts"), {
+            type: 'line',
+            data: {
+                labels: ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May"],
+                datasets: [<?php echo $html ?>]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Progress Report of <?php echo $year_stemp ?>'
+                },
+                legend: {
+                    display: false
+                }, scales: {
+                    yAxes: [{
+                            ticks: {
+                                min: 0,
+                                max: 300,
+                                stepSize: 30
+                            }
+                        }]
+                }
+
+            }
+        });
+    </script>
+</div>
